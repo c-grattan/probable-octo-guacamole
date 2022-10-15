@@ -4,6 +4,10 @@
   "private": true,
   "homepage": "https://c-grattan.github.io/probable-octo-guacamole",
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@fontsource/roboto": "^4.5.8",
+    "@mui/material": "^5.10.9",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -19,8 +23,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-	"predeploy": "npm run build",
-	"deploy": "gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
