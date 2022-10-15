@@ -12,12 +12,8 @@ function App() {
       <header>
 		<AppBar>
 			<Toolbar>
-				<IconButton>
-					<MenuIcon />
-				</IconButton>
-				<Typography variant="h6">
-					Title
-				</Typography>
+				<IconButton><MenuIcon /></IconButton>
+				<Typography variant="h6">probable-octo-guacamole</Typography>
 			</Toolbar>
 		</AppBar>
       </header>
