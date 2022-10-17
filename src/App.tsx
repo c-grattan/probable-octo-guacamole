@@ -1,12 +1,19 @@
+import Box from "@mui/material/Box";
 import { AppHeader } from "./components/AppHeader";
+import { Content } from "./components/Content";
 
 function App() {
 	return (
-		<div>
-			<header>
-				<AppHeader />
-			</header>
-		</div>
+		<Box>
+			<Box>
+				<header>
+					<AppHeader />
+				</header>
+			</Box>
+			<Box>
+				<Content />
+			</Box>
+		</Box>
 	);
 }
 

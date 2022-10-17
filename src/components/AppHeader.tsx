@@ -11,7 +11,7 @@ export const AppHeader = () => {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	function toggleSidebar() {
-		setSidebarOpen(!sidebarOpen)
+		setSidebarOpen(!sidebarOpen);
 	}
 
 	return	<>
@@ -33,11 +33,12 @@ export const AppHeader = () => {
 						</Typography>
 					</Toolbar>
 				</AppBar>
-				
+				<Toolbar />
+
 				<Drawer open={sidebarOpen}
 						onClose={toggleSidebar}
 						anchor='left'>
 					<Typography variant="h3">Sidebar Menu</Typography>
 				</Drawer>
-			</>
+			</>;
 }
