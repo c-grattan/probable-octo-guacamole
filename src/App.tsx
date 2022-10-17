@@ -1,5 +1,6 @@
 import {useState} from "react";
 
+import Box from '@mui/material/Box';
 import {AppBar} from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -19,8 +20,17 @@ function App() {
 			<header>
 				<AppBar>
 					<Toolbar>
-						<IconButton onClick={toggleSidebar}><MenuIcon /></IconButton>
-						<Typography variant="h4">probable-octo-guacamole</Typography>
+						<IconButton
+							onClick={toggleSidebar}
+							size="medium"
+							edge="start"
+							sx={{
+								mr: 2
+							}}
+						>
+							<MenuIcon />
+						</IconButton>
+						<Typography variant="h4">Probable octo guacamole</Typography>
 					</Toolbar>
 				</AppBar>
 				<Drawer open={sidebarOpen}
