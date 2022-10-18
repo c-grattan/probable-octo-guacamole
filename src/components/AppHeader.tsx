@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-import {AppBar} from '@mui/material';
+import {AppBar, Divider} from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -38,7 +38,10 @@ export const AppHeader = () => {
 				<Drawer open={sidebarOpen}
 						onClose={toggleSidebar}
 						anchor='left'>
-					<Typography variant="h3">Sidebar Menu</Typography>
+					<Typography variant="h4" sx={{m: 2}}>
+						Sidebar Menu
+					</Typography>
+					<Divider />
 				</Drawer>
 			</>;
 }
