@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/probable-octo-guacamole/static/js/main.72fb3749.js",
+    "main.js": "/probable-octo-guacamole/static/js/main.dcd90123.js",
     "index.html": "/probable-octo-guacamole/index.html",
-    "main.72fb3749.js.map": "/probable-octo-guacamole/static/js/main.72fb3749.js.map"
+    "main.dcd90123.js.map": "/probable-octo-guacamole/static/js/main.dcd90123.js.map"
   },
   "entrypoints": [
-    "static/js/main.72fb3749.js"
+    "static/js/main.dcd90123.js"
   ]
 }
