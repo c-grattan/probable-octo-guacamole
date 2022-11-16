@@ -5,6 +5,7 @@ import Add from "@mui/icons-material/Add"
 import { useState } from "react";
 import { InventoryDialog } from "./InventoryDialog";
 import { Item } from "./inventory/Item";
+import { ItemPanel } from "./inventory/ItemPanel";
 
 export const Content = () => {
 	const [invDialogOpen, setInvDialogOpen] = useState(false);
@@ -18,16 +19,24 @@ export const Content = () => {
 	return <>
 		<Grid container spacing={2}
 						justifyContent="center"
-						alignContent="center">
+						alignContent="center"
+		>
+			{
+				inventory.map((item) => {
+					return (<>
+						<Grid item spacing={1}>
+							<ItemPanel item={item} />
+						</Grid>
+					</>);
+				})
+			}
 			<Grid item spacing={1}>
-				{
-					inventory.map((item) => {
-						return item.name + ": " + item.count;
-					})
-				}
 				<IconButton size="large"
-							onClick={toggleInvDialog}>
-				<Add /></IconButton>
+							onClick={toggleInvDialog}
+							style={{marginTop:"75%"}}
+				>
+					<Add />
+				</IconButton>
 			</Grid>
 		</Grid>
 
