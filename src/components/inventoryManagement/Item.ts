@@ -1,4 +1,4 @@
-export type Item = {
+export type CommodityStack = {
 	name: string,
 	count: number
 };

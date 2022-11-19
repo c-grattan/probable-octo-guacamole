@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, Typography } from "@mui/material";
-import { Item } from "./Item"
+import { CommodityStack } from "./Item"
 
 type IPProps = {
-	item: Item
+	item: CommodityStack
 }
 
 export const ItemPanel = ({item}: IPProps) => {
