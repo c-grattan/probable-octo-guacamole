@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Add from "@mui/icons-material/Add"
 import { useState } from "react";
-import { InventoryDialog } from "./InventoryDialog";
+import { InventoryDialog } from "./inventoryManagement/InventoryDialog";
 import { CommodityStack } from "./inventoryManagement/Item";
 import { ItemPanel } from "./inventoryManagement/ItemPanel";
 import { InventoryController } from "./inventoryManagement/InventoryController";
@@ -31,7 +31,7 @@ export const Content = () => {
 			}
 			<Grid item spacing={1}>
 				<IconButton size="large"
-							onClick={() => {toggleInvDialog(); inventoryHandler.add({name:"Banana", count: 20})}}
+							onClick={() => {toggleInvDialog()}}
 							style={{marginTop:"75%"}}
 				>
 					<Add />
@@ -39,6 +39,10 @@ export const Content = () => {
 			</Grid>
 		</Grid>
 
-		<InventoryDialog open={invDialogOpen} close={toggleInvDialog} />
+		<InventoryDialog
+			open={invDialogOpen}
+			close={toggleInvDialog}
+			updateInventory={(stack) => {inventoryHandler.add(stack)}}
+		/>
 	</>;
 }
