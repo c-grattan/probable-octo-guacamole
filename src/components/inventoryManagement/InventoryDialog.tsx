@@ -63,7 +63,7 @@ export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 						label="Count"
 						type="number"
 						margin="normal"
-						value={count}
+						value={count == 0 ? null : count}
 						onChange={(event) => setCount(+event.target.value)}
 					/>
 				</DialogContent>
