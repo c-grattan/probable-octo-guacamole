@@ -2,7 +2,7 @@ import { Autocomplete, Button, DialogActions, DialogContent, TextField } from "@
 import Dialog from "@mui/material/Dialog";
 import { useState } from "react";
 import { commodities } from "./Commodities";
-import { CommodityStack } from "./Item";
+import { CommodityStack } from "./CommodityStack";
 
 type IDProps = {
 	open: boolean,
@@ -13,17 +13,24 @@ type IDProps = {
 export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 	const [name, setName] = useState("");
 	const [count, setCount] = useState(0);
+	const [unitPrice, setUnitPrice] = useState(0);
 
-	function handleClose(): void {
+	function reset(): void {
 		setName("");
 		setCount(0);
+		setUnitPrice(0);
+	}
+
+	function handleClose(): void {
+		reset();
 		close();
 	}
 
 	function submit(): void {
 		const newStack: CommodityStack = {
 			name: name,
-			count: count
+			count: count,
+			unitPrice: unitPrice
 		}
 		updateInventory(newStack);
 		handleClose();
@@ -40,6 +47,10 @@ export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 						: newValue.label);
 		}
 	}
+
+	const canSubmit: boolean =
+		name.length == 0 ||
+		count == 0;
 
 	return	<Dialog
 				open={open}
@@ -59,6 +70,7 @@ export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 						onInputChange={(event, value) => setName(value)}
 						freeSolo
 					/>
+
 					<TextField
 						label="Count"
 						type="number"
@@ -66,11 +78,19 @@ export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 						value={count == 0 ? null : count}
 						onChange={(event) => setCount(+event.target.value)}
 					/>
+
+					<TextField
+						label="Unit Price"
+						type="number"
+						margin="normal"
+						value={unitPrice == 0 ? null : unitPrice}
+						onChange={(event) => setUnitPrice(+event.target.value)}
+					/>
 				</DialogContent>
 				
 				<DialogActions>
 					<Button onClick={submit}
-							disabled={name.length == 0 || count == 0}
+							disabled={canSubmit}
 					>
 						Submit
 					</Button>

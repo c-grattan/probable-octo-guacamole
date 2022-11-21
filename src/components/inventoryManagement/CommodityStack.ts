@@ -1,4 +1,5 @@
 export type CommodityStack = {
 	name: string,
-	count: number
+	count: number,
+	unitPrice: number
 };

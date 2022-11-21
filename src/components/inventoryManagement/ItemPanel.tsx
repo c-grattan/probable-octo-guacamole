@@ -1,7 +1,7 @@
 import { Card, CardActions, CardContent, CardHeader, Collapse, Icon, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import { rootCertificates } from "tls";
-import { CommodityStack } from "./Item"
+import { CommodityStack } from "./CommodityStack"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 type IPProps = {
@@ -21,7 +21,10 @@ export const ItemPanel = ({item}: IPProps) => {
 
 	const ExpandMore = ((props: ExpandMoreProps) => {
 		return <IconButton	onClick={toggleExpand}
-							style={{transform: props.expand ? 'rotate(180deg)' : 'rotate(0deg)'}}
+							style={{
+								transform: props.expand ? 'rotate(180deg)' : 'rotate(0deg)',
+								marginLeft: 'auto'
+							}}
 							size="small"
 				>
 					<ExpandMoreIcon />
@@ -32,23 +35,24 @@ export const ItemPanel = ({item}: IPProps) => {
 		<Card>
 			<Typography
 				color="text.secondary"
+				component="div"
 				gutterBottom
 			>
 				{item.name}
 			</Typography>
 			<CardContent>
-				<Typography variant="h4" component="div">
+				<Typography variant="h2" component="div">
 					{item.count}
 				</Typography>
 			</CardContent>
 			<CardActions>
-				<IconButton>
-					<ExpandMore expand={expand} />
-				</IconButton>
+				<ExpandMore expand={expand} />
 			</CardActions>
 
 			<Collapse in={expand}>
-				<Typography variant="h3">{item.count}x{item.name}</Typography>
+				<Typography variant="h3" color="darkred">
+					-{item.count * item.unitPrice}
+				</Typography>
 			</Collapse>
 		</Card>
 	);

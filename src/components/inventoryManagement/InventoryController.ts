@@ -1,4 +1,4 @@
-import { CommodityStack } from "./Item";
+import { CommodityStack } from "./CommodityStack";
 
 export class InventoryController {
 	inventory: CommodityStack[] = [];
