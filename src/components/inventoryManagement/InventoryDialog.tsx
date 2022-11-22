@@ -63,6 +63,7 @@ export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 							<TextField
 								{...params}
 								label="Commodity"
+								autoFocus
 							/>
 						}
 						options={commodities}
@@ -75,7 +76,7 @@ export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 						label="Count"
 						type="number"
 						margin="normal"
-						value={count == 0 ? null : count}
+						value={count == 0 ? '' : count}
 						onChange={(event) => setCount(+event.target.value)}
 					/>
 
@@ -83,7 +84,7 @@ export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 						label="Unit Price"
 						type="number"
 						margin="normal"
-						value={unitPrice == 0 ? null : unitPrice}
+						value={unitPrice == 0 ? '' : unitPrice}
 						onChange={(event) => setUnitPrice(+event.target.value)}
 					/>
 				</DialogContent>
