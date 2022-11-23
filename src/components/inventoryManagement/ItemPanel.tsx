@@ -46,9 +46,12 @@ export const ItemPanel = ({item, undo}: IPProps) => {
 			>
 				{item.name}
 			</Typography>
-			<CardContent>
+			<CardContent style={{textAlign: "center"}}>
 				<Typography variant="h2" component="div">
 					{item.count}
+				</Typography>
+				<Typography color="text.secondary" component="div">
+					₡{item.unitPrice}/unit
 				</Typography>
 			</CardContent>
 			<CardActions>
