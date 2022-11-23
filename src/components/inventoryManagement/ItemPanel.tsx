@@ -1,14 +1,16 @@
-import { Card, CardActions, CardContent, CardHeader, Collapse, Icon, IconButton, Typography } from "@mui/material";
+import { Card, CardActions, CardContent, CardHeader, Collapse, Divider, Icon, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import { rootCertificates } from "tls";
 import { CommodityStack } from "./CommodityStack"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type IPProps = {
-	item: CommodityStack
+	item: CommodityStack,
+	undo: () => void;
 }
 
-export const ItemPanel = ({item}: IPProps) => {
+export const ItemPanel = ({item, undo}: IPProps) => {
 	const [expand, setExpand] = useState(false);
 
 	const toggleExpand = () => {
@@ -31,8 +33,12 @@ export const ItemPanel = ({item}: IPProps) => {
 				</IconButton>;
 	})
 
+	const handleUndo = () => {
+		undo();
+	}
+
 	return (
-		<Card>
+		<Card style={{padding: "2.5%"}}>
 			<Typography
 				color="text.secondary"
 				component="div"
@@ -40,9 +46,12 @@ export const ItemPanel = ({item}: IPProps) => {
 			>
 				{item.name}
 			</Typography>
-			<CardContent>
+			<CardContent style={{textAlign: "center"}}>
 				<Typography variant="h2" component="div">
 					{item.count}
+				</Typography>
+				<Typography color="text.secondary" component="div">
+					₡{item.unitPrice}/unit
 				</Typography>
 			</CardContent>
 			<CardActions>
@@ -50,9 +59,18 @@ export const ItemPanel = ({item}: IPProps) => {
 			</CardActions>
 
 			<Collapse in={expand}>
-				<Typography variant="h3" color="darkred">
-					-{item.count * item.unitPrice}
+				<Divider />
+				<Typography variant="h3">
+					Total: ₡{item.count * item.unitPrice}
 				</Typography>
+				<CardActions>
+					<IconButton	size="small"
+								style={{marginLeft: 'auto'}}
+								onClick={() => handleUndo()}
+					>
+						<DeleteIcon />
+					</IconButton>
+				</CardActions>
 			</Collapse>
 		</Card>
 	);
