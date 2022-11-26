@@ -1,14 +1,17 @@
 import { Add } from "@mui/icons-material";
 import { Grid, IconButton } from "@mui/material";
 import { useState } from "react";
-import { JsxElement } from "typescript";
 import { CommodityStack } from "./CommodityStack";
 import { ConfirmDialog } from "./ConfirmDialog";
 import { InventoryController } from "./InventoryController";
 import { InventoryDialog } from "./InventoryDialog";
 import { ItemPanel } from "./ItemPanel";
 
-export const InventoryManagement = () => {
+type IMProps = {
+	updateProfits: (amount: number) => void
+}
+
+export const InventoryManagement = ({updateProfits}: IMProps) => {
 	const [invDialogOpen, setInvDialogOpen] = useState(false);
 
 	const toggleInvDialog = () => {
@@ -30,6 +33,20 @@ export const InventoryManagement = () => {
 
 	const [inventoryHandler,] = useState(new InventoryController);
 
+	function calcStackValue(stack: CommodityStack): number {
+		return stack.unitPrice * stack.count;
+	}
+
+	function addStack(stack: CommodityStack): void {
+		updateProfits(stack.count * stack.unitPrice);
+		inventoryHandler.add(stack);
+	}
+
+	function undo(): void {
+		updateProfits(-calcStackValue(inventoryHandler.getStack(itemToRemove)));
+		inventoryHandler.remove(itemToRemove);
+	}
+
 	return	<>
 				<Grid	container
 						spacing={2}
@@ -48,7 +65,7 @@ export const InventoryManagement = () => {
 						<Grid item spacing={1}>
 							<IconButton size="large"
 										onClick={() => {toggleInvDialog()}}
-										style={{marginTop:"75%"}}
+										style={{marginTop:"100%"}}
 							>
 								<Add />
 							</IconButton>
@@ -59,12 +76,12 @@ export const InventoryManagement = () => {
 				<InventoryDialog
 					open={invDialogOpen}
 					close={toggleInvDialog}
-					updateInventory={(stack) => {inventoryHandler.add(stack)}}
+					updateInventory={(stack) => addStack(stack)}
 				/>
 
 				<ConfirmDialog	open={confirmDialogOpen}
 								close={toggleCDialogOpen}
-								undo={() => inventoryHandler.remove(itemToRemove)}
+								undo={() => undo()}
 				/>
 			</>;
 }
