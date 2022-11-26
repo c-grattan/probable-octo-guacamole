@@ -34,12 +34,10 @@ export const AppHeader = ({profits}: AHProps) => {
 						</IconButton>
 
 						<Typography variant="h4">
-							Probable octo guacamole
+							Starport
 						</Typography>
 
-						<div style={{marginLeft: 'auto'}}>
-							<ProfitTracker profits={profits} />
-						</div>
+						<ProfitTracker profits={profits} />
 					</Toolbar>
 				</AppBar>
 				<Toolbar />
