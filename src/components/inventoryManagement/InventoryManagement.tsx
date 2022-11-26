@@ -38,12 +38,12 @@ export const InventoryManagement = ({updateProfits}: IMProps) => {
 	}
 
 	function addStack(stack: CommodityStack): void {
-		updateProfits(stack.count * stack.unitPrice);
+		updateProfits(-stack.count * stack.unitPrice);
 		inventoryHandler.add(stack);
 	}
 
 	function undo(): void {
-		updateProfits(-calcStackValue(inventoryHandler.getStack(itemToRemove)));
+		updateProfits(calcStackValue(inventoryHandler.getStack(itemToRemove)));
 		inventoryHandler.remove(itemToRemove);
 	}
 
