@@ -24,8 +24,16 @@ export class InventoryController {
 		return id;
 	}
 
+	getStack(id: number): CommodityStack {
+		const stack = this.inventory.get(id);
+		return stack == undefined ? {name: '', count: 0, unitPrice: 0} : stack;
+	}
+
 	remove(id: number): void {
-		this.inventory.delete(id);
+		const stack: CommodityStack | undefined = this.getStack(id);
+		if(stack != undefined) {
+			this.inventory.delete(id);
+		}
 	}
 
 	getCollapsedInventory(): CommodityStack[] {
