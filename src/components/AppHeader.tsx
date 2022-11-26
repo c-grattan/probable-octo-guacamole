@@ -6,8 +6,13 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
+import { ProfitTracker } from "./ProfitTracker";
 
-export const AppHeader = () => {
+type AHProps = {
+	profits: number
+}
+
+export const AppHeader = ({profits}: AHProps) => {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	function toggleSidebar() {
@@ -31,6 +36,10 @@ export const AppHeader = () => {
 						<Typography variant="h4">
 							Probable octo guacamole
 						</Typography>
+
+						<div style={{marginLeft: 'auto'}}>
+							<ProfitTracker profits={profits} />
+						</div>
 					</Toolbar>
 				</AppBar>
 				<Toolbar />

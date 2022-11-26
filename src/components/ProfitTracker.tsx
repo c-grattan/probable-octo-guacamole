@@ -9,7 +9,7 @@ export const ProfitTracker = ({profits}: PTProps) => {
 
 	return <>
 		<Typography variant="h2" color={color}>
-			₡{profits}
+			{profits < 0 ? '-': null}₡{Math.abs(profits)}
 		</Typography>
 	</>
 }
