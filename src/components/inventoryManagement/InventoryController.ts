@@ -1,48 +1,89 @@
+import { InventoryType } from "../../App";
 import { CommodityStack } from "./CommodityStack";
 
 export class InventoryController {
-	inventory: Map<number, CommodityStack> = new Map();
+	cargoData: InventoryType;
+	setInventory: (inventory: InventoryType) => any;
+
+	constructor(inv: any, setInv: any) {
+		this.cargoData = inv;
+		this.setInventory = setInv;
+	}
+
+	updateProfits(change: number): void {
+		let newProfits = this.cargoData.profits + change;
+		this.setInventory({
+			...this.cargoData,
+			profits: newProfits
+		})
+		this.cargoData.profits = newProfits;
+	}
+
+	addStack(id: number, stack: CommodityStack): void {
+		let newInventory = this.cargoData.inventory;
+		newInventory.set(id, stack);
+		this.setInventory({
+			...this.cargoData,
+			inventory: newInventory
+		})
+	}
+
+	removeStack(id: number): void {
+		let newInventory = this.cargoData.inventory;
+		newInventory.delete(id);
+		this.setInventory({
+			...this.cargoData,
+			inventory: newInventory
+		})
+	}
 
 	getInventory(): [CommodityStack, number][] {
 		const inv: [CommodityStack, number][] = [];
-		this.inventory.forEach((stack, key) => {
+		this.cargoData.inventory.forEach((stack, key) => {
 			inv.push([stack, key]);
 		})
 		return inv;
 	};
 
+	calcStackValue(cs: CommodityStack): number {
+		return cs.unitPrice * cs.count;
+	}
+
+	purchaseStack(cs: CommodityStack): void {
+		this.updateProfits(-this.calcStackValue(cs));
+	}
+
 	add(cs: CommodityStack): number {
 		let id = 0;
-		while(id < this.inventory.size) {
-			if(!this.inventory.has(id)) {
+		while(id < this.cargoData.inventory.size) {
+			if(!this.cargoData.inventory.has(id)) {
 				break;
 			} else {
 				id++;
 			}
 		}
-		this.inventory.set(id, cs);
+		this.addStack(id, cs);
+		this.purchaseStack(cs);
+		console.log(this.cargoData);
 		return id;
 	}
 
 	getStack(id: number): CommodityStack {
-		const stack = this.inventory.get(id);
+		const stack = this.cargoData.inventory.get(id);
 		return stack == undefined ? {name: '', count: 0, unitPrice: 0} : stack;
 	}
 
 	remove(id: number): void {
 		const stack: CommodityStack | undefined = this.getStack(id);
 		if(stack != undefined) {
-			this.inventory.delete(id);
+			this.updateProfits(this.calcStackValue(stack));
+			this.removeStack(id);
+			console.log(this.cargoData);
 		}
 	}
 
 	getCollapsedInventory(): CommodityStack[] {
 		const collapsedInventory: CommodityStack[] = [];
-
-		this.inventory.forEach((element: CommodityStack) => {
-			
-		});
-
 		return collapsedInventory;
 	};
 };

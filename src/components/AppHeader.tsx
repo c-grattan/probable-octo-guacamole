@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 
 import {AppBar, Divider} from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,11 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import { ProfitTracker } from "./ProfitTracker";
 
-type AHProps = {
-	profits: number
-}
-
-export const AppHeader = ({profits}: AHProps) => {
+export const AppHeader = () => {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	function toggleSidebar() {
@@ -37,7 +33,7 @@ export const AppHeader = ({profits}: AHProps) => {
 							Starport
 						</Typography>
 
-						<ProfitTracker profits={profits} />
+						<ProfitTracker />
 					</Toolbar>
 				</AppBar>
 				<Toolbar />

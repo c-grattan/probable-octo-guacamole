@@ -1,26 +1,44 @@
+import { Inventory } from "@mui/icons-material";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { AppHeader } from "./components/AppHeader";
 import { Content } from "./components/Content";
+import { CommodityStack } from "./components/inventoryManagement/CommodityStack";
+import { InventoryController } from "./components/inventoryManagement/InventoryController";
+
+export type InventoryType = {
+	profits: number,
+	inventory: Map<number, CommodityStack>
+}
+
+const newInv: InventoryType = {
+	profits: 0,
+	inventory: new Map<number, CommodityStack>()
+}
+
+export const InventoryControl = createContext(new InventoryController(null, null));
+export const InventoryContext = createContext(newInv);
 
 function App() {
-	const [profits, setProfits] = useState(0);
-
-	function updateProfits(change: number): void {
-		setProfits(profits + change);
-	}
+	const [inventory, setInventory] = useState({
+		profits: 0,
+		inventory: new Map<number, CommodityStack>()
+	});
+	const [invControl,] = useState(new InventoryController(inventory, setInventory));
 
 	return (
-		<Box>
-			<Box>
-				<header>
-					<AppHeader profits={profits} />
-				</header>
-			</Box>
-			<Box>
-				<Content updateProfits={updateProfits} />
-			</Box>
-		</Box>
+		<InventoryControl.Provider value={invControl}>
+			<InventoryContext.Provider value={inventory}>
+				<Box>
+					<header>
+						<AppHeader />
+					</header>
+				</Box>
+				<Box>
+					<Content />
+				</Box>
+			</InventoryContext.Provider>
+		</InventoryControl.Provider>
 	);
 }
 

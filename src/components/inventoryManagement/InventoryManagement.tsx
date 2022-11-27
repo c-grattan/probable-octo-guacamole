@@ -1,49 +1,36 @@
 import { Add } from "@mui/icons-material";
 import { Grid, IconButton } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { InventoryControl } from "../../App";
 import { CommodityStack } from "./CommodityStack";
 import { ConfirmDialog } from "./ConfirmDialog";
-import { InventoryController } from "./InventoryController";
 import { InventoryDialog } from "./InventoryDialog";
 import { ItemPanel } from "./ItemPanel";
 
-type IMProps = {
-	updateProfits: (amount: number) => void
-}
+export const InventoryManagement = () => {
+	const inventoryHandler = useContext(InventoryControl);
 
-export const InventoryManagement = ({updateProfits}: IMProps) => {
 	const [invDialogOpen, setInvDialogOpen] = useState(false);
-
 	const toggleInvDialog = () => {
 		setInvDialogOpen(!invDialogOpen);
 	}
 
 	const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
-
 	const toggleCDialogOpen = () => {
 		setConfirmDialogOpen(!confirmDialogOpen);
 	}
 
 	const [itemToRemove, setItemToRemove] = useState(0);
-
 	const handleRemove = (id: number) => {
 		setItemToRemove(id);
 		toggleCDialogOpen();
 	}
 
-	const [inventoryHandler,] = useState(new InventoryController);
-
-	function calcStackValue(stack: CommodityStack): number {
-		return stack.unitPrice * stack.count;
-	}
-
 	function addStack(stack: CommodityStack): void {
-		updateProfits(-stack.count * stack.unitPrice);
 		inventoryHandler.add(stack);
 	}
 
 	function undo(): void {
-		updateProfits(calcStackValue(inventoryHandler.getStack(itemToRemove)));
 		inventoryHandler.remove(itemToRemove);
 	}
 
