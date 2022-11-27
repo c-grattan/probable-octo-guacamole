@@ -64,7 +64,6 @@ export class InventoryController {
 		}
 		this.addStack(id, cs);
 		this.purchaseStack(cs);
-		console.log(this.cargoData);
 		return id;
 	}
 
@@ -78,7 +77,6 @@ export class InventoryController {
 		if(stack != undefined) {
 			this.updateProfits(this.calcStackValue(stack));
 			this.removeStack(id);
-			console.log(this.cargoData);
 		}
 	}
 
