@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material"
+import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material"
 import { useContext } from "react";
 import { InventoryControl } from "../../App";
 

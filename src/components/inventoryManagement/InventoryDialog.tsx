@@ -51,8 +51,8 @@ export const InventoryDialog = ({open, close}: IDProps) => {
 	}
 
 	const canSubmit: boolean =
-		name.length == 0 ||
-		count == 0;
+		name.length === 0 ||
+		count === 0;
 
 	return	<Dialog
 				open={open}
@@ -78,7 +78,7 @@ export const InventoryDialog = ({open, close}: IDProps) => {
 						label="Count"
 						type="number"
 						margin="normal"
-						value={count == 0 ? '' : count}
+						value={count === 0 ? '' : count}
 						onChange={(event) => setCount(+event.target.value)}
 					/>
 
@@ -86,7 +86,7 @@ export const InventoryDialog = ({open, close}: IDProps) => {
 						label="Unit Price"
 						type="number"
 						margin="normal"
-						value={unitPrice == 0 ? '' : unitPrice}
+						value={unitPrice === 0 ? '' : unitPrice}
 						onChange={(event) => setUnitPrice(+event.target.value)}
 					/>
 				</DialogContent>

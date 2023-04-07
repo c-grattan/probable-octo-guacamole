@@ -1,4 +1,3 @@
-import { Inventory } from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import { createContext, useState } from "react";
 import { AppHeader } from "./components/AppHeader";
