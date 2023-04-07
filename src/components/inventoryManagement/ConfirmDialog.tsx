@@ -1,15 +1,19 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material"
+import { useContext } from "react";
+import { InventoryControl } from "../../App";
 
 type CDProps = {
 	open: boolean,
 	close: () => void,
-	undo: () => void
+	itemToRemove: number
 }
 
-export const ConfirmDialog = ({open, close, undo}: CDProps) => {
+export const ConfirmDialog = ({open, close, itemToRemove}: CDProps) => {
+	const inventoryHandler = useContext(InventoryControl);
+
 	function handleUndo(): void {
 		close();
-		undo();
+		inventoryHandler.remove(itemToRemove);
 	}
 
 	return	<Dialog open={open} onClose={close}>

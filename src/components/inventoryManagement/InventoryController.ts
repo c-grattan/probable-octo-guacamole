@@ -56,10 +56,10 @@ export class InventoryController {
 	add(cs: CommodityStack): number {
 		let id = 0;
 		while(id < this.cargoData.inventory.size) {
-			if(!this.cargoData.inventory.has(id)) {
-				break;
-			} else {
+			if(this.cargoData.inventory.has(id)) {
 				id++;
+			} else {
+				break;
 			}
 		}
 		this.addStack(id, cs);
@@ -69,19 +69,47 @@ export class InventoryController {
 
 	getStack(id: number): CommodityStack {
 		const stack = this.cargoData.inventory.get(id);
-		return stack == undefined ? {name: '', count: 0, unitPrice: 0} : stack;
+		return stack === undefined ? {name: '', count: 0, unitPrice: 0} : stack;
 	}
 
 	remove(id: number): void {
 		const stack: CommodityStack | undefined = this.getStack(id);
-		if(stack != undefined) {
+		if(stack !== undefined) {
 			this.updateProfits(this.calcStackValue(stack));
 			this.removeStack(id);
 		}
 	}
 
+	private stackArrayHas(stackArray: CommodityStack[], name: string): number {
+		for(let i = 0; i < stackArray.length; i++) {
+			if(stackArray[i].name === name) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	getCollapsedInventory(): CommodityStack[] {
 		const collapsedInventory: CommodityStack[] = [];
+
+		this.cargoData.inventory.forEach((stack: CommodityStack) => {
+			const stackPos = this.stackArrayHas(collapsedInventory, stack.name);
+			if(stackPos > -1) {
+				const totalCount = collapsedInventory[stackPos].count + stack.count;
+				collapsedInventory[stackPos].unitPrice = (collapsedInventory[stackPos].unitPrice * collapsedInventory[stackPos].count
+				 + stack.unitPrice * stack.count)
+				 / totalCount;
+				collapsedInventory[stackPos].count = totalCount;
+			} else {
+				const newStack: CommodityStack = {
+					name: stack.name,
+					count: stack.count,
+					unitPrice: stack.unitPrice
+				}
+				collapsedInventory.push(newStack);
+			}
+		});
+
 		return collapsedInventory;
 	};
 };

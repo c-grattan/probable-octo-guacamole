@@ -26,14 +26,6 @@ export const InventoryManagement = () => {
 		toggleCDialogOpen();
 	}
 
-	function addStack(stack: CommodityStack): void {
-		inventoryHandler.add(stack);
-	}
-
-	function undo(): void {
-		inventoryHandler.remove(itemToRemove);
-	}
-
 	return	<>
 				<Grid	container
 						spacing={2}
@@ -44,12 +36,12 @@ export const InventoryManagement = () => {
 					<>
 						{
 							inventoryHandler.getInventory().map((keyStack: [CommodityStack, number]) => {
-								return	<Grid item spacing={1} xs={2} key={keyStack[1]}>
+								return	<Grid item xs={2} key={keyStack[1]}>
 											<ItemPanel item={keyStack[0]} undo={() => handleRemove(keyStack[1])} />
 										</Grid>
 							})
 						}
-						<Grid item spacing={1}>
+						<Grid item>
 							<IconButton size="large"
 										onClick={() => {toggleInvDialog()}}
 										style={{marginTop:"100%"}}
@@ -63,12 +55,11 @@ export const InventoryManagement = () => {
 				<InventoryDialog
 					open={invDialogOpen}
 					close={toggleInvDialog}
-					updateInventory={(stack) => addStack(stack)}
 				/>
 
 				<ConfirmDialog	open={confirmDialogOpen}
 								close={toggleCDialogOpen}
-								undo={() => undo()}
+								itemToRemove={itemToRemove}
 				/>
 			</>;
 }

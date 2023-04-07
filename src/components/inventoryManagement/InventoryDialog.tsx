@@ -1,16 +1,16 @@
 import { Autocomplete, Button, DialogActions, DialogContent, TextField } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { InventoryControl } from "../../App";
 import { commodities } from "./Commodities";
 import { CommodityStack } from "./CommodityStack";
 
 type IDProps = {
 	open: boolean,
 	close: () => void,
-	updateInventory: (newStack: CommodityStack) => void,
 }
 
-export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
+export const InventoryDialog = ({open, close}: IDProps) => {
 	const [name, setName] = useState("");
 	const [count, setCount] = useState(0);
 	const [unitPrice, setUnitPrice] = useState(0);
@@ -26,13 +26,15 @@ export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 		close();
 	}
 
+	const inventoryHandler = useContext(InventoryControl)
+
 	function submit(): void {
 		const newStack: CommodityStack = {
 			name: name,
 			count: count,
 			unitPrice: unitPrice
 		}
-		updateInventory(newStack);
+		inventoryHandler.add(newStack);
 		handleClose();
 	}
 
