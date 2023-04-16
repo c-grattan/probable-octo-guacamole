@@ -1,7 +1,8 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material"
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
 import { useContext } from "react"
 import { InventoryControl } from "../../App"
-import { CommodityStack } from "./CommodityStack"
+import { CommodityStack } from "../inventoryManagement/CommodityStack"
+import { SellRow } from "./SellRow"
 
 type SDProps = {
 	open: boolean,
@@ -19,9 +20,7 @@ export const SellDialog = ({open, close}: SDProps) => {
 		<DialogContent>
 			{
 				inventoryHandler.getCollapsedInventory().map((stack: CommodityStack, index: number) => {
-					return <Typography key={index}>
-						{stack.name}: {stack.count}@{stack.unitPrice}
-					</Typography>;
+					return <SellRow stack={stack} key={index} />
 				})
 			}
 		</DialogContent>

@@ -26,7 +26,7 @@ export const InventoryDialog = ({open, close}: IDProps) => {
 		close();
 	}
 
-	const inventoryHandler = useContext(InventoryControl)
+	const inventoryHandler = useContext(InventoryControl);
 
 	function submit(): void {
 		const newStack: CommodityStack = {

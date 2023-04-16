@@ -7,7 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import { ProfitTracker } from "./ProfitTracker";
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
-import { SellDialog } from "./inventoryManagement/SellDialog";
+import { SellDialog } from "./sellDialog/SellDialog";
 
 export const AppHeader = () => {
 	const [sidebarOpen, setSidebarOpen] = useState(false);

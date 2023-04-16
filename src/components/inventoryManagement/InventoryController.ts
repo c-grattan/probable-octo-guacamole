@@ -28,6 +28,18 @@ export class InventoryController {
 		})
 	}
 
+	reduceStack(id: number, amount: number): void {
+		let newInventory = this.cargoData.inventory;
+		const newStack = newInventory.get(id);
+		if(newStack) {
+			newStack.count -= amount;
+		}
+		this.setInventory({
+			...this.cargoData,
+			inventory: newInventory
+		})
+	}
+
 	removeStack(id: number): void {
 		let newInventory = this.cargoData.inventory;
 		newInventory.delete(id);
@@ -112,4 +124,32 @@ export class InventoryController {
 
 		return collapsedInventory;
 	};
+
+	private getCheapestStackId(commodityName: string): number {
+		let id = -1;
+		let cheapestPrice = -1;
+		this.cargoData.inventory.forEach((stack: CommodityStack, index: number) => {
+			if(stack.name === commodityName && (id === -1 || stack.unitPrice < cheapestPrice)) {
+				id = index;
+				cheapestPrice = stack.unitPrice;
+			}
+		});
+		return id;
+	}
+
+	sell(name: string, amount: number, sellPrice: number) {
+		while(amount > 0) {
+			const cheapestId = this.getCheapestStackId(name);
+			const cheapestStack = this.getStack(cheapestId);
+			if(cheapestStack.count > amount) {
+				this.updateProfits(amount * sellPrice);
+				cheapestStack.count -= amount;
+				amount = 0;
+			} else {
+				amount -= cheapestStack.count;
+				this.updateProfits(cheapestStack.count * sellPrice);
+				this.removeStack(cheapestId);
+			}
+		}
+	}
 };
