@@ -1,22 +1,23 @@
 import {useState} from "react";
-
-import {AppBar, Divider} from '@mui/material';
+import {AppBar, Button, Divider} from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import { ProfitTracker } from "./ProfitTracker";
+import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
+import { SellDialog } from "./sellDialog/SellDialog";
 
-type AHProps = {
-	profits: number
-}
-
-export const AppHeader = ({profits}: AHProps) => {
+export const AppHeader = () => {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
-
 	function toggleSidebar() {
 		setSidebarOpen(!sidebarOpen);
+	}
+
+	const [sellDialogOpen, setSellDialogOpen] = useState(false);
+	function toggleSellDialog() {
+		setSellDialogOpen(!sellDialogOpen);
 	}
 
 	return	<>
@@ -34,12 +35,17 @@ export const AppHeader = ({profits}: AHProps) => {
 						</IconButton>
 
 						<Typography variant="h4">
-							Probable octo guacamole
+							Starport
 						</Typography>
 
-						<div style={{marginLeft: 'auto'}}>
-							<ProfitTracker profits={profits} />
-						</div>
+						<Button	variant="contained"
+								endIcon={<MonetizationOnOutlinedIcon />}
+								size="medium"
+								style={{marginLeft: 'auto'}}
+								onClick={toggleSellDialog}
+						>
+							Sell
+						</Button>
 					</Toolbar>
 				</AppBar>
 				<Toolbar />
@@ -48,9 +54,12 @@ export const AppHeader = ({profits}: AHProps) => {
 						onClose={toggleSidebar}
 						anchor='left'>
 					<Typography variant="h4" sx={{m: 2}}>
-						Sidebar Menu
+						Current Running Total
 					</Typography>
 					<Divider />
+					<ProfitTracker />
 				</Drawer>
+
+				<SellDialog open={sellDialogOpen} close={toggleSellDialog} />
 			</>;
 }

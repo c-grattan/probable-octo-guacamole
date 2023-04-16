@@ -1,16 +1,16 @@
 import { Autocomplete, Button, DialogActions, DialogContent, TextField } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { InventoryControl } from "../../App";
 import { commodities } from "./Commodities";
 import { CommodityStack } from "./CommodityStack";
 
 type IDProps = {
 	open: boolean,
 	close: () => void,
-	updateInventory: (newStack: CommodityStack) => void,
 }
 
-export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
+export const InventoryDialog = ({open, close}: IDProps) => {
 	const [name, setName] = useState("");
 	const [count, setCount] = useState(0);
 	const [unitPrice, setUnitPrice] = useState(0);
@@ -26,13 +26,15 @@ export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 		close();
 	}
 
+	const inventoryHandler = useContext(InventoryControl);
+
 	function submit(): void {
 		const newStack: CommodityStack = {
 			name: name,
 			count: count,
 			unitPrice: unitPrice
 		}
-		updateInventory(newStack);
+		inventoryHandler.add(newStack);
 		handleClose();
 	}
 
@@ -49,8 +51,8 @@ export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 	}
 
 	const canSubmit: boolean =
-		name.length == 0 ||
-		count == 0;
+		name.length === 0 ||
+		count === 0;
 
 	return	<Dialog
 				open={open}
@@ -76,7 +78,7 @@ export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 						label="Count"
 						type="number"
 						margin="normal"
-						value={count == 0 ? '' : count}
+						value={count === 0 ? '' : count}
 						onChange={(event) => setCount(+event.target.value)}
 					/>
 
@@ -84,7 +86,7 @@ export const InventoryDialog = ({open, close, updateInventory}: IDProps) => {
 						label="Unit Price"
 						type="number"
 						margin="normal"
-						value={unitPrice == 0 ? '' : unitPrice}
+						value={unitPrice === 0 ? '' : unitPrice}
 						onChange={(event) => setUnitPrice(+event.target.value)}
 					/>
 				</DialogContent>
